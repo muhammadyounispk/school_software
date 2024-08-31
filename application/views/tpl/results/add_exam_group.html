@@ -1,0 +1,62 @@
+
+
+<div class="row">
+    <div class="col-md-2 col-lg-2" ></div>
+
+    <div class="col-md-8 col-lg-8" >
+        <!-- Horizontal Form -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Add Exam Group</h3>
+            </div><!-- /.box-header -->
+            <form id="form1" action="{{base_url}}admin/GeneralExam" name="examgroupform" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <div class="box-body">
+                    <input type="hidden" name="ci_csrf_token" value="">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name <small class="req">*</small></label>
+                        <input id="name" autofocus="" name="name" placeholder="" type="text" class="form-control" value="{{data['name']}}" autocomplete="off">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group hide">
+                        <label for="exampleInputEmail1"> Exam Type</label> <small class="req">*</small>
+                        <select id="name" name="exam_type" placeholder="" type="text" class="form-control">
+                            <option value="">Select</option>
+                            <option selected="" value="school_grade_system">Marks System</option>
+                        </select>
+
+                        <span class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="" rows="3">{{data['description']}}</textarea>
+                        <span class="text-danger"></span>
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <input name="update_id" hidden="" value="{{data['id']}}">
+                    {% if data%}
+                    <button type="submit" class="btn btn-info pull-right"><img id="add_exam_name" style="height: 15px;" src="{{base_url}}/uploads/digis/tick.png">   Update</button>
+                    {%else%}
+                    <button type="submit" class="btn btn-info pull-right"><img id="add_exam_name" style="height: 15px;" src="{{base_url}}/uploads/digis/tick.png"> Save</button>
+                    {%endif%}
+
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="col-md-2 col-lg-2" ></div>
+</div>

@@ -1,0 +1,42 @@
+{% include 'school_header.html' %}
+
+<center>
+    <table border="1" width="100%" style="border-collapse: collapse;">
+    <tr>
+        <th>Class Name: </th> <td>{{class}}</td>
+        <th>Section Name</th><td>{{section}}</td>
+        <th>Subject</th><td>{{subject}}</td>
+      
+    </tr>
+    <tr>
+        <th>Teacher Name</th>
+        <td colspan="3">{{staff['name']}}
+            {{staff['surname']}}</td>
+            <th>Emp ID</th><td>{{staff['employee_id']}}</td>
+    </tr>
+    </table>
+<table border="1" width="100%" style="border-collapse: collapse;">
+
+<tr>
+    <td>
+        {%if img %}
+        <img src="{{docs}}" style="height: 30%;width: 100%;">
+        {% endif %}
+        
+        {{home_work|raw}}
+        <div style="text-align: right; margin-top: 10px;">
+            Created Date: {{homework_detail['homework_date']}}<br>
+            Submission Date: {{homework_detail['submit_date']}}
+            
+        </div>
+    </td>
+</tr>
+
+
+
+</table>
+
+</center>
+
+
+{% include 'school_footer.html' %}

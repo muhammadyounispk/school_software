@@ -1,0 +1,88 @@
+
+
+{% if res %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+        <button type="button" id="GetFile" style="position: fixed; margin-left: -10%"    class="btn btn-primary btn-sm"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+        <br>
+        <button type="button" id="sendSMS" style="position: fixed; margin-left: -14%; margin-top: 20px "    class="btn btn-primary btn-sm"><i class="fa fa-envelope-o"></i> Send SMS/ Whatsapp</button>
+
+       <label><input type="checkbox" id="select_all" checked> Send to All</label>
+        <div id="pdf_content" data-pdfname="{{exam_title}}_result_card.pdf" >
+            <form method="post" id="result-form">
+
+        {% for student in res %}
+         {% include 'date_sheet_student.html' %}
+        {% endfor %}
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#GetFile').on('click', function () {
+      Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html()},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+
+
+</script>
+
+<script>
+
+    $("#select_all").change(function () {  //"select all" change
+        $('input:checkbox').not(this).prop('checked', this.checked);
+        // $(".checkbox").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+    });
+    $('#sendSMS').on('click', function () {
+        Loader(true);
+
+        $.ajax({
+            url: '{{base_url}}admin/GeneralExam/sendawardlist',
+            method: 'POST',
+            data : $("#result-form").serialize(),
+            success: function (data) {
+                Loader(false);
+                var d=JSON.parse(data);
+                if(d.code==200){
+                    successMsg(d.message);
+                }else{
+                    errorMsg(d.message);
+                }
+
+            }
+        });
+    });
+</script>
+{% else %}
+{% include 'no_result.html' %}
+
+{% endif %}
+
+

@@ -1,0 +1,88 @@
+
+<button type="button" id="GetFile" style="position: relative; float: right"    class="btn btn-primary btn-sm"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+<div id="pdf_content" data-pdfname="{{exam_title}}Date_sheet_Detailed.pdf" >
+
+{% include 'school.html' %}
+
+<table width="98%"  style="border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <td width="2%">Sr </td>
+        <td width="10%"> Class Name </td>
+        {% for date in sheet_dates %}
+        <td>{{date|date("l m/d/Y")}} </td>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for class in sheet_classes %}
+    <tr>
+        <td>{{ loop.index }} </td>
+        <td>{{class }} </td>
+        {% for date in sheet_dates %}
+        <td>
+            {% for sub in sheet_subjects[class][date] %}
+            {{sub}} ,
+            {% endfor %}
+
+        </td>
+        {% endfor %}
+
+
+
+    </tr>
+    {% endfor %}
+
+
+
+
+    </tbody>
+</table>
+
+    <table>
+        <tr>
+            <td>
+                <div style="font-size:0.6rem;margin-top: 15px; margin-right: 30px;"><b>Note</b>
+                    The Above exam datesheet is provided as a tentative schedule for the upcoming assessments. However, please note that these dates are subject to change without prior notice. Our school administration reserves the right to make adjustments to the timetable due to unforeseen circumstances, administrative requirements, or any other compelling reasons. We advise all students to regularly check for updates or revisions on our official school communication channels. While we strive to provide accurate and timely information, the final and official schedule will be communicated through formal announcements. Any reliance on this tentative datesheet is at your own discretion, and the school will not be held responsible for any inconveniences arising from changes made to the schedule. For any clarifications or inquiries, we encourage you to reach out to the school administration directly. Your understanding and cooperation are appreciated as we aim to ensure a smooth and fair examination process.
+
+
+
+                    <div style="text-align: right">
+                        <b>Print @ {{ print_date }}</b>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#GetFile').on('click', function () {
+        Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html(),pdf_name:$("#pdf_content").data('pdfname')},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+</script>

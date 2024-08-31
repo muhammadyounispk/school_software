@@ -1,0 +1,1 @@
+{"messageStubParameters":[],"labels":[],"userReceipt":[],"reactions":[],"pollUpdates":[],"key":{"remoteJid":"923099914748@s.whatsapp.net","fromMe":true,"id":"BAE5DACE567AC463"},"message":{"extendedTextMessage":{"text":"Hello"}},"messageTimestamp":{"low":1690840680,"high":0,"unsigned":true},"status":1,"sessionId":"296_countryschool.isdigitalschools.com"}

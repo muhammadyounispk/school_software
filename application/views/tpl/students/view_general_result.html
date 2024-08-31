@@ -1,0 +1,70 @@
+<div class="col-md-10" style="margin-top: 10px">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-body">
+
+            <div class="mailbox-messages table-responsive">
+                <div class="download_label"> <?php echo $this->lang->line('exam') . " " . $this->lang->line('group') . " " . $this->lang->line('list') ?></div>
+                <table class="table table-hover table-striped table-bordered example">
+                    <thead>
+                    <tr>
+                        <th>Sr</th>
+                        <th>Date</th>
+                        <th>Exam Name</th>
+                        <th>Subject</th>
+                        <th>Total Marks</th>
+                        <th>Total Students</th>
+                        <th>< 30 %</th>
+                        <th>Result</th>
+                        <th>Added by</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key,result in view_results %}
+                    <tr>
+                        <td>{{key+1}}</td>
+                        <td>{{result.exam_date}}</td>
+                        <td>{{result.exam_name}}</td>
+                        <td>{{result.subject_name}}</td>
+                        <td>{{result.total}}</td>
+                        <td>{{result.total_attendant}}</td>
+                        <td>{{result.fail_students}}</td>
+                        <td>{{(100-result.fail_students/result.total_attendant*100)|round(1, 'ceil')}} %</td>
+                        <td>{{result.added_by}}</td>
+                        <td>
+
+                            {%if (allowme['exam_reporting-can_edit'] and whoiam.username==result.added_by  ) or isSupperAdmin %}
+                            {% endif %}
+                            <button type="button"  id="modify_result" data-auth_id="{{result.auth_id}}">Modify</button>
+
+
+                        
+
+                            {%if (allowme['exam_reporting-can_delete'] and  whoiam.username==result.added_by ) or isSupperAdmin %}
+                            {% endif %}
+                            <button type="button"  id="delete_result" data-auth_id="{{result.auth_id}}">Delete</button>
+                           
+                        </td>
+
+                    </tr>
+
+
+
+                    {% endfor %}
+
+
+
+
+                    </tbody>
+                </table><!-- /.table -->
+
+
+
+            </div><!-- /.mail-box-messages -->
+
+
+        </div><!-- /.box-body -->
+    </div>
+</div>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{{account_no}}</title>
+
+    <style>
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 7px solid #eee;
+
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .invoice-box table tr td:nth-child(2) {
+            /* text-align: left; */
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .invoice-box.rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .invoice-box.rtl table {
+            text-align: right;
+        }
+
+        .invoice-box.rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+<div class="invoice-box">
+
+    <table cellpadding="0" cellspacing="0" >
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td  width="40%" >
+                            <center>
+                                <img style="height: 150px; width: 300px;"
+                                     src="https://dev.isdigitalschools.com/uploads/digis/technical.png"
+
+                                /></center>
+
+
+                            <br>
+                            <center><h3>New version {{puitc.version}} Released </h3></center>
+
+
+
+
+                        </td>
+
+                        <td>
+                            <div style="margin-left: 50px; border-left: 2px solid black;font-size: 0.8rem">
+
+                                <table width="100%" border="1" style="border-collapse: collapse">
+                                    <tr>
+                                        <th>Product Name</th><td>DIGIS School Software</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Product Code</th><td>nx124</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Manager</th><td>MR.Younis (Sr. System Engineer )<br>Mob: 03099914748</td>
+                                    </tr>
+                                </table>
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+
+
+
+
+        <tr class="heading">
+            <td>Issue To</td>
+
+            <td>Issued by</td>
+        </tr>
+
+        <tr class="details">
+            <td><b>{{school.name}}</b>
+                <br>Mob:{{school.phone}}
+                <br>Email:{{school.email}}
+                <br>Address:{{school.address}}
+                <br><b>Software Version:</b> {{school.version}}
+                <br><b>Website:</b> https://{{school.host}}
+            </td>
+
+            <td>
+                <b>Techincal Department <br>@ DIGIS School Software</b>
+                <br>Address: IT Tower , Hali Road Lahore,
+                <br><b>Software Version:</b> {{puitc.version}}
+
+            </td>
+        </tr>
+
+
+        <tr class="heading">
+            <td COLSPAN="2">{{puitc.name}}</td>
+
+
+        </tr>
+
+        <tr class="item">
+
+
+            <td COLSPAN="2">
+                {{puitc.detail| raw}}
+                <br>
+
+                <div style="text-align: right">
+                    <b>Released on : </b>{{puitc.created_at}}
+                </div>
+
+
+            </td>
+        </tr>
+
+
+
+
+
+
+    </table>
+
+</div>

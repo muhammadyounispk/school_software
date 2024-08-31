@@ -1,0 +1,176 @@
+
+<table width="98%"  style="page-break-after:always;border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+    <tr style="border-bottom: none">
+        <td colspan="7" style="border-bottom: transparent">
+            <table width="100%"  border="0">
+                <th width="20%"><img style="float:right;height: 120px;width: auto;object-fit: fill;" src="{{logo}}"> </th>
+                <td colspan="7" style="text-align: center"  width="65%" >
+                    <center>
+                    <div style="text-align: center">
+                        <div style="font-size: 34px;text-align: center; "><center>{{school.name}}</center></div>
+                        <div style="margin-top: -5px;margin-bottom: 5px;">
+                            <b>Phone</b>: {{school.phone}}  <b>Email</b>: {{school.email}}<br>
+                            <b>Address</b>: {{school.address}}<br>
+                            <b>Website</b>: {{school.host}}
+                        </div>
+                    </div>
+                    </center>
+                </td>
+
+                <td width="15%" style="text-align: right; margin-right: 5px;"><img height="100px" width="100px" src="{{base_url}}/uploads/digis/qrcode.png"></td>
+            </table>
+        </td>
+
+
+    </tr>
+    <tr style="border-top: transparent">
+        <td colspan="6">
+            <div style="text-align: center;margin-left: 80px"><h4>{{exam_title}}</h4></div>
+            <table width="100%"  border="0" style="margin-bottom: 10px;margin-top: 20px">
+                <tr style=" margin: 5px">
+                    <th style="width: 17%">Student Name</th>
+                    <td style="text-align: center">
+                        {{student.firstname}} {{student.lastname}}
+                        <div style="border-bottom: 1px solid black;"></div>
+
+                    </td>
+
+                    <th style="width: 10%;text-align: center">Roll No.</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.roll_no}}
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </td>
+
+                     <th style="width: 5%">Class</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.results[0].class_name}}
+
+                        <div style="border-bottom: 1px solid black;margin-right: 5px;"></div>
+
+                    </td>
+
+
+
+                </tr>
+                <tr style=" margin: 5px">
+                    <th style="width: 17%">Mobile #</th>
+                    <td style="text-align:  center;width: 15%">
+                       {{student.mobileno}}
+                        <div style="border-bottom: 1px solid black;"></div>
+
+                    </td>
+
+                    <th style="width: 10%;text-align: center">Email.</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.email}}
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </td>
+
+                     <th style="width: 10%">Admission #</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.admission_no}}
+
+                        <div style="border-bottom: 1px solid black;margin-right: 5px;"></div>
+
+                    </td>
+
+
+
+                </tr>
+
+
+            </table>
+        </td>
+        <th width="10%" style="text-align: center">
+            <img   style="height: 80px;width: auto;object-fit: fill; margin-bottom: 8px" src="{{base_url}}{{student.image}}"  onerror="this.src='{{base_url}}uploads/student_images/default_female.jpg'"></th>
+
+    </tr>
+
+
+    <tr style="background-color: #bdbcbc; text-align: center; font-weight: bold;">
+        <td colspan="3">Examination Subject (s) </td>
+        <td rowspan="2"> Obtain </td>
+        <td rowspan="2"> Total </td>
+        <td colspan="2"> Grade </td>
+    </tr>
+    <tr style="background-color: #bdbcbc">
+        <td width="10%">Date </td>
+        <td colspan="2"> Name </td>
+        <td width="5%"> % </td>
+        <td width="5%"> Grade </td>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    {% for result in student.results %}
+
+    <tr>
+        <td width="10%">{{result.exam_date}}</td>
+        <td colspan="2">{{result.subject_name}} </td>
+        <td width="8%"> {{result.obtain}}</td>
+        <td width="8%"> {{result.total}} </td>
+        <td width="12%"> {{result.percentage}}</td>
+        <td width="5%"> {{result.grade}}</td>
+
+    </tr>
+
+
+    {% endfor %}
+
+
+
+
+
+    <tr style="background-color: #bdbcbc;font-size: 17px;font-weight: bold;">
+        <td colspan="3" class="footer">Total</td>
+        <td> {{student.obtain_marks}}</td>
+        <td>{{student.total_marks}}</td>
+        <td>{{student.pecentage}} %</td>
+        <td>{{student.grade}}</td>
+    </tr>
+    <tr style="background-color: #bdbcbc;font-size: 13px;font-weight: bold;">
+        <td colspan="1" class="footer">Remarks</td>
+        <td colspan="6">{{student.remarks}} </td>
+    </tr>
+    <tr>
+
+        <td colspan="7">
+            <table  border="0" width="100%" style="margin: 20px">
+                <!--<tr>
+                    <td><div style="border-bottom: 2px solid black ;width: 80%; margin: 10px"></div></td>
+                    <td><div style="border-bottom: 2px solid black; width: 80%; margin: 10px"></div></td>
+                    <td><div style="border-bottom: 2px solid black; width: 80%; margin: 10px"></div></td>
+                </tr>-->
+                <tr>
+                    <td colspan="3" style="text-align: center; font-size: 0.6rem">
+                        *Grade Formula by Percentage (%)
+
+                        {% for grade in grades %}
+                        <b>{{grade.name}}: <u style="margin: 2px"> {{grade.mark_upto |round(1, 'ceil') }}-{{grade.mark_from |round(1, 'ceil')}}  </u></b>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                       <div style="font-size:0.6rem;margin-top: 15px; margin-right: 30px;"><b>Note</b>
+                           Our commitment to accuracy remains unwavering, even when our computer-generated system may produce errors in student results. We accept these challenges with dedication.<br> <b>Contact Us @</b> {{school.phone}} OR Email  {{school.email}} for related complaint
+                           <div style="text-align: right">
+                               <b>Print @ {{ print_date }}</b>
+                           </div>
+                       </div>
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+
+
+    </tr>
+
+    </tbody>
+</table>
+

@@ -1,0 +1,152 @@
+
+.combogrid{
+	max-width: 800px;
+	min-width: 800px;	
+	font-size:12px;
+}
+
+.cg-pg-button:hover {
+	 border: 1px solid #999999;
+	 background: #dadada url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
+	 font-weight: normal;
+	 color: #212121;
+	 padding: 0;
+}
+.cg-pg-button {
+	padding: 1px;
+	width: 18px;
+}
+.cg-pg-table {
+	border: 0;
+	padding: 0;
+	margin:0;
+}
+.cg-pg-button:hover {
+	 border: 1px solid #999999;
+	 background: #dadada url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
+	 font-weight: normal;
+	 color: #212121;
+	 padding: 0;
+}
+.cg-pg-button.cg-state-disabled:hover {
+	border: 1px #ececec !important;
+	padding: 1px;
+	background:none;
+}
+#cg-navInfo{
+	min-width: 150px;
+	text-align: center;
+}
+
+
+/**---------------------------------------*/
+.cgcombo-state-hover {
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+}
+.cg-comboButton{
+	background-color: #eeeeee;
+	width: 100%;
+	height: 35px;
+  margin: -3px 0 -3px -1px;
+  padding: 2px 2px 2px 0;
+  width: 100%;
+  -moz-border-radius: 0 0 3px 3px;
+  -webkit-border-radius: 0 0 3px 3px;
+  outline: 0 none;
+  vertical-align: baseline;
+}
+/**---------------------------------------*/
+
+#cg-divHeader {/* hiv sepration to header*/
+	height: 25px;
+	padding: 4px;
+	-moz-border-radius: 3px 3px 0 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	margin: -3px -3px 0 -1px;
+}
+
+
+
+.cg-colHeader { /* col hearding*/
+	float:left;
+	font-weight: bold;
+}
+
+
+.cg-colItem{ /* pading and spacng*/
+	height:14px;
+	padding: 5px;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+}
+
+.cg-navTable input{
+width:30px;
+font-size:13px;
+height:10px;
+}
+
+.cg-navTable select{
+width:60px;
+font-size:13px;
+height:10px;
+}
+.cg-navTable{ /* Qamar bottom pager css*/
+	float: left;
+	table-layout:auto;
+	width: 100%;
+	font-size: 13px;
+  font-weight: normal;
+	border: 0;
+	margin: 0;
+}
+
+.cg-navTable td input, select{
+	
+    height: 12px;
+    line-height: 10px;
+    min-height: 25px;
+    padding: 0px 0px !important;
+    transition: background 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    vertical-align: top;
+}
+
+.cg-navTable td{
+	padding: 1px;
+	border:0;
+	text-shadow: none;
+}
+.cg-navTable tr{
+	color: inherit;
+	background: none;
+	border:0;
+}
+
+
+.cg-DivItem { /*Qamar div item propertiy*/
+	float:left;
+	overflow: hidden;
+	height: 27px;
+	border-bottom:1px solid #ccc;
+    padding-bottom: 4px;
+}
+
+/*
+.cg-autocomplete { position: absolute; cursor: default; }	
+
+ workarounds */
+
+
+
+.cg-menu .cg-menu-item { /* Qamar spcing and margen*/
+	margin: 0;
+	padding: 0;
+	clear: left;
+	overflow: hidden;
+	border: 1px solid transparent;
+}
+
+
+/*-------------------------------------------------------------------------------------*/
+

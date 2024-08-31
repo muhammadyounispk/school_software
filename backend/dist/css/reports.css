@@ -1,0 +1,33 @@
+
+
+table {
+   font-size: 0.8rem;
+   
+
+
+
+
+}
+
+.pdftable  {
+   border-top: 1px solid #000; /* 1px solid black border on top of the table */
+   column-span: 100%;
+}
+
+.pdftable th, .pdftable td {
+   border: 1px solid #000; /* 1px solid black border on the left and right sides of table headers and data cells */
+}
+@page {
+   margin: 10px;
+
+}
+textarea,input,select{
+   display: none;
+}
+.pdfhide{
+   display: none;
+}
+
+
+
+

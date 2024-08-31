@@ -1,0 +1,152 @@
+
+<table width="98%"  style="page-break-after:always;border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+    <tr style="border-bottom: none">
+        <td colspan="7" style="border-bottom: transparent">
+            <table width="100%"  border="0">
+                <th width="20%"><input style="float: left;margin-top: -11px" type="checkbox" name="sendsms[]" checked><img style="float:right;height: 120px;width: auto;object-fit: fill;" src="{{logo}}"> </th>
+                <td colspan="7" style="text-align: center"  width="65%" >
+                    <center>
+                    <div style="text-align: center">
+                        <div style="font-size: 34px;text-align: center; "><center>{{school.name}}</center></div>
+                        <div style="margin-top: -5px;margin-bottom: 5px;">
+                            <b>Phone</b>: {{school.phone}}  <b>Email</b>: {{school.email}}<br>
+                            <b>Address</b>: {{school.address}}<br>
+                            <b>Website</b>: {{school.host}}<br>
+                            <b>{{report_title}}</b><br>
+                            {{exam_title}}
+                        </div>
+                    </div>
+                    </center>
+                </td>
+
+                <td width="15%" style="text-align: right; margin-right: 5px;"><img height="100px" width="100px" src="{{base_url}}/uploads/digis/qrcode.png"></td>
+            </table>
+        </td>
+
+
+    </tr>
+    <tr style="border-top: transparent">
+        <td colspan="6">
+
+            <table width="100%"  border="0" style="margin-bottom: 10px;margin-top: 20px">
+                <tr style=" margin: 5px">
+                    <th style="width: 17%">Student Name</th>
+                    <td style="text-align: center">
+                        {{student.firstname}} {{student.lastname}}
+                        <div style="border-bottom: 1px solid black;"></div>
+
+                    </td>
+
+                    <th style="width: 10%;text-align: center">Roll No.</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.roll_no}}
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </td>
+
+                     <th style="width: 5%">Class</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.results[0].class_name}}
+
+                        <div style="border-bottom: 1px solid black;margin-right: 5px;"></div>
+
+                    </td>
+
+
+
+                </tr>
+                <tr style=" margin: 5px">
+                    <th style="width: 17%">Mobile #</th>
+                    <td style="text-align:  center;width: 15%">
+                       {{student.mobileno}}
+                        <div style="border-bottom: 1px solid black;"></div>
+
+                    </td>
+
+                    <th style="width: 10%;text-align: center">Email.</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.email}}
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </td>
+
+                     <th style="width: 10%">Admission #</th>
+                    <td style="text-align: center; width: 15%">
+                        {{student.admission_no}}
+
+                        <div style="border-bottom: 1px solid black;margin-right: 5px;"></div>
+
+                    </td>
+
+
+
+                </tr>
+
+
+            </table>
+        </td>
+        <th width="10%" style="text-align: center">
+            <img   style="height: 80px;width: auto;object-fit: fill; margin-bottom: 8px" src="{{base_url}}{{student.image}}"  onerror="this.src='{{base_url}}uploads/student_images/default_female.jpg'"></th>
+
+    </tr>
+
+
+    <input hidden="" name="phone[]" value="{{student.mobileno}}">
+    {% set subjectresult = "" %}
+    <tr style="background-color: #bdbcbc; text-align: center; font-weight: bold;">
+        <td width="5%">Sr </td>
+        <td colspan="4"> Subject Name </td>
+        <td> Day </td>
+        <td> Date </td>
+    </tr>
+    {% for ds in student.datesheet %}
+    {% set subjectresult=subjectresult~"*"~ds.subject_name~ "*: "~ ds.exam_date|date('l')~" ("~ds.exam_date|date('d/m/Y')~")\n"   %}
+
+    <tr>
+        <td width="5%">{{loop.index}}</td>
+        <td colspan="4"> {{ds.subject_name}} </td>
+        <td>  {{ds.exam_date|date('l')}} </td>
+        <td>  {{ds.exam_date|date('d/m/Y')}} </td>
+
+    </tr>
+
+    {% endfor %}
+
+    <textarea hidden=""  name="message[]">{{exam_title}}
+----------------------
+Name:{{student.firstname}} {{student.lastname}}
+Father Name:{{student.father_name}}
+{{subjectresult}}
+
+</textarea>
+
+    <tr>
+        <td colspan="7">
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <b>Note</b><br>
+
+                        to ensure a fair examination environment, adhere to these guidelines regarding the issued date sheet: avoid mobile or electronic device usage during exams. Print and securely keep the date sheet, refraining from digital copies on phones. Memorize the schedule and use the printed copy for preparation, bringing it on exam day along with necessary stationery. Switch off mobile devices, storing them outside the exam hall. Non-compliance may result in disciplinary action. Your cooperation upholds the exam's integrity.
+                        <div style="text-align: right">
+                            <b>Print @ {{ print_date }}</b>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+
+
+
+
+    </thead>
+    <tbody>
+
+
+    </tbody>
+</table>
+
+
+

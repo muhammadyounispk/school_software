@@ -1,0 +1,52 @@
+
+
+{% if res %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <button type="button" id="GetFile" style="position: fixed; margin-left: -10%"    class="btn btn-primary btn-sm"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+
+        <div id="pdf_content" data-pdfname="{{exam_title}}_result_card.pdf" >
+        {% for student in res %}
+         {% include 'student_result.html' %}
+        {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#GetFile').on('click', function () {
+      Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html()},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+</script>
+{% else %}
+{% include 'no_result.html' %}
+
+{% endif %}
+
+

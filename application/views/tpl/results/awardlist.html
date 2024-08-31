@@ -1,0 +1,125 @@
+
+<button type="button" id="GetFile" style="position: relative; "    class="btn btn-primary btn-sm"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+
+<button type="button" id="sendSMS" style="position: relative; "    class="btn btn-primary btn-sm"><i class="fa fa-envelope-o"></i> Send SMS/ Whatsapp</button>
+
+<div id="pdf_content" data-pdfname="{{exam_title}}_awardlist.pdf" >
+
+
+{% include 'school.html' %}
+
+    <form method="post" id="result-form">
+
+<table width="98%"  style="page-break-after:always;border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <th colspan="4"><center>Student Information of {{class_name}}</center> </th>
+        <th colspan="5"><center>Result Information</center> </th>
+    </tr>
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <td width="2%">Sr <input type="checkbox"  id="select_all" checked></td>
+        <td width="5%"> Roll # </td>
+        <td width="10%"> Student Name </td>
+        <td width="10%">Father Name</td>
+        <td width="5%"> Obtain Marks </td>
+        <td  width="5%"> Total Marks </td>
+        <td  width="5%"> % </td>
+        <td  width="5%"> Grade</td>
+        <td width="5%"> Rank</td>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    {% for result in res %}
+<input hidden="" name="phone[]" value="{{result.mobileno}}">
+<textarea hidden name="message[]">{{exam_title}}
+----------------------
+Name:{{result.student_name}}
+Father Name:{{result.father_name}}
+Obtain:{{result.obtain}}
+Total: {{result.total}}
+Percentage: {{result.per}}%
+Grade: {{result.grade}}
+Rank: {{result.rank}}
+</textarea>
+    <tr>
+        <td>{{ loop.index }} <input type="checkbox" name="sendsms[]" checked></td>
+        <td>{{result.roll_no}} </td>
+        <td>{{result.firstname}} {{result.lastname}} </td>
+        <td > {{result.father_name}}</td>
+        <td> {{result.obtain}} </td>
+        <td> {{result.total}}</td>
+        <td> {{result.per}}</td>
+        <td> {{result.grade}}</td>
+        <td> {{result.rank}}</td>
+
+    </tr>
+
+
+    {% endfor %}
+
+
+
+
+
+    {% include 'footer.html' %}
+    </tbody>
+</table>
+    </form>
+
+</div>
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#GetFile').on('click', function () {
+        Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html()},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+    $("#select_all").change(function () {  //"select all" change
+        $('input:checkbox').not(this).prop('checked', this.checked);
+        // $(".checkbox").prop('checked', $(this).prop("checked")); //change all ".checkbox" checked status
+    });
+    $('#sendSMS').on('click', function () {
+        Loader(true);
+
+        $.ajax({
+            url: '{{base_url}}admin/GeneralExam/sendawardlist',
+            method: 'POST',
+            data : $("#result-form").serialize(),
+            success: function (data) {
+                Loader(false);
+                var d=JSON.parse(data);
+                if(d.code==200){
+                    successMsg(d.message);
+                }else{
+                    errorMsg(d.message);
+                }
+
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,207 @@
+
+<button type="button" id="GetFile" style="position: relative; "    class="btn btn-primary btn-sm"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+<div id="pdf_content" data-pdfname="{{exam_title}}tlpr_Detailed.pdf" >
+
+{% include 'school.html' %}
+    <br><h3>i) Subject Wise Report by Grade</h3>
+<table width="98%"  style="border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+
+
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <th ><center>Sr</center> </th>
+        <th ><center>Name of Grade</center> </th>
+        {% for subject in sub %} <td style="background-color: #a4a3a3"><center>{{subject.subject_name}}<center></center></td>   {% endfor %}
+
+    </tr>
+
+    </thead>
+    <tbody>
+
+        {% for grade in all_grades %}
+
+        <tr>
+        <th width="2%" ><center>{{loop.index}}</center> </th>
+        <th width="5%" ><center>{{grade.name}}</center> </th>
+        {% for subject in sub %}
+            {% set total_val = grade_stat['bysubject'][subject.subject_name][grade.name] %}
+
+            <td ><center>{% if total_val>0 %}  {{total_val}} {% else %} 0 {% endif %}  <center></center></td>
+
+            {% endfor %}
+        </tr>
+            {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+    <br><h3>ii) All Over Report Weightage by Grade</h3>
+
+<table width="98%"  style="border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+
+
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <th ><center>Sr</center> </th>
+        <th ><center>Name of Grade</center> </th>
+        <th ><center>No. Students<br>
+            <small>Compiled @ Subjects(
+                {% for subject in sub %}
+                {{subject.subject_name}},
+                {% endfor %} )*
+            </small>
+        </center>
+
+        </th>
+
+    </tr>
+
+
+
+    </thead>
+    <tbody>
+
+        {% for grade_name,total in grade_stat['ashole'] %}
+
+        <tr>
+        <th width="2%" style="text-align: left"><center>{{loop.index}}</center> </th>
+        <th width="2%" style="text-align: left"><center>{{grade_name}}</center> </th>
+        <th  style="text-align: left"><center>{{total}}</center> </th>
+
+        </tr>
+            {% endfor %}
+
+
+    </tbody>
+
+</table>
+    <br><h3>iii) All Over Report Weightage by Percentage (%)</h3>
+<table width="98%"  style="border-collapse: collapse;margin-bottom: 10px;" border="1" >
+    <thead>
+
+
+    <tr style="background-color: #bdbcbc; font-weight: bold">
+        <th ><center>Sr</center> </th>
+        <th ><center>Value of Percentage (%)</center> </th>
+        <th ><center>No. Students<br>
+            <small>Compiled @ Subjects(
+                {% for subject in sub %}
+                {{subject.subject_name}},
+                {% endfor %} )*
+            </small>
+        </center>
+
+        </th>
+
+    </tr>
+
+
+
+    </thead>
+    <tbody>
+
+        {% for grade_name,total in grade_stat['bypercentage'] %}
+
+        <tr>
+        <th width="2%" style="text-align: left"><center>{{loop.index}}</center> </th>
+        <th width="2%" style="text-align: left"><center>{{grade_name}}</center> </th>
+        <th  style="text-align: left"><center>{{total}}</center> </th>
+
+        </tr>
+            {% endfor %}
+
+
+    </tbody>
+
+</table>
+    <br><h3>iv) Subject Wise Report Percentage %</h3>
+    <table width="98%"  style="border-collapse: collapse;margin-bottom: 10px;" border="1" >
+        <thead>
+
+
+        <tr style="background-color: #bdbcbc; font-weight: bold">
+            <th ><center>Sr</center> </th>
+            <th ><center>Subject Name</center> </th>
+            <th ><center>Weightage by Percentage </center> </th>
+
+        </tr>
+
+        </thead>
+        <tbody>
+
+        {% for subject_name,data in grade_stat['byperc'] %}
+
+        <tr>
+            <th width="2%" ><center>{{loop.index}}</center> </th>
+            <th width="15%" ><center>{{subject_name}}</center> </th>
+            <td>
+                <center>
+                    <table width="20%"  border="0">
+                        {% for percentage,total in data %}
+                        <tr style="border-bottom: 1px dotted black;">
+                            <td ><div style="padding: 5px"></div>{{percentage}}</td>
+                            <td width="5%"><div style="padding: 5px"></div>{{total}}</td>
+                        </tr>
+                        {% endfor %}
+
+
+                    </table>
+                </center>
+            </td>
+
+
+        </tr>
+
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+    <table width="98%">
+        <tr>
+            <th>Note:</th>
+            <td  style="text-align: center;">
+                *Grade Formula by Percentage (%)
+
+                {% for grade in grades %}
+                <b>{{grade.name}}: <u style="margin: 2px"> {{grade.mark_upto |round(1, 'ceil') }}-{{grade.mark_from |round(1, 'ceil')}}  </u></b>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#GetFile').on('click', function () {
+        Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html(),pdf_name:$("#pdf_content").data('pdfname')},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+</script>

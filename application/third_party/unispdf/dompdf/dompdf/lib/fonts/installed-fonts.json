@@ -1,0 +1,11 @@
+{
+    "jameel": {
+        "normal": "jameel_normal_5f9b064d2d64d10d7873b5ad02f92d88"
+    },
+    "noto nastaliq urdu": {
+        "normal": "\/home3\/isdigita\/dev.isdigitalschools.com\/application\/third_party\/unispdf\/dompdf\/dompdf\/lib\/fonts\/noto_nastaliq_urdu_normal_9a9a7d914ff19cbcc894ab8414252d7b",
+        "500": "\/home3\/isdigita\/dev.isdigitalschools.com\/application\/third_party\/unispdf\/dompdf\/dompdf\/lib\/fonts\/noto_nastaliq_urdu_500_ac4cd600ab0f94a35281b35fd5eed19e",
+        "600": "\/home3\/isdigita\/dev.isdigitalschools.com\/application\/third_party\/unispdf\/dompdf\/dompdf\/lib\/fonts\/noto_nastaliq_urdu_600_dbaa7a89e724e99d20138d9c88f855af",
+        "bold": "noto_nastaliq_urdu_bold_14552d727e2f6d359e284c17714e32c0"
+    }
+}

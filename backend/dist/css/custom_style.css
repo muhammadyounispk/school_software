@@ -1,0 +1,446 @@
+.box_dashboard{
+	display: block;
+    font-size: 15px;
+    margin-top: 38px;
+    white-space: nowrap;
+    margin-left: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+    z-index: 9999; /* Ensure the loader is on top of other content */
+  }
+
+  .loader img{
+    height: 300px;
+  }
+
+
+  #fancybox-content{max-height:80vh}
+
+
+  /* Styles for the topbar menu */
+.topbar {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu li {
+  display: inline;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+/* Styles for the image display div */
+#imageContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#hoveredImage {
+  max-width: 100%;
+  height: auto;
+  display: none;
+}
+
+/* Style for the horizontal list */
+.horizontal-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Display the list items horizontally using flexbox */
+  position: absolute;
+}
+
+.horizontal-list li {
+  margin-right: 10px; /* Add spacing between list items */
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.horizontal-list li:hover {
+  background-color: #ff9900; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+}
+
+
+[data-after-text],
+[data-before-text] {
+	--badge-offset-x: calc(0px - var(--badge-size) / 3);
+	--badge-offset-y: calc(0px - var(--badge-size) / 3);
+	--badge-size: 1.5rem;
+	--circle-size: 2rem;
+	--dot-offset: 0.5rem;
+	--dot-size: 0.5rem;
+		
+	--b: initial;
+	--bgc: hsl(195, 100%, 30%);
+	--bdrs: 0;
+	--c: hsl(195, 100%, 99%);
+	--d: inline-flex;
+	--fz: 0.625rem;
+	--fw: 700;
+	--h: auto;
+	--l: initial;
+	--m: 0.4rem;
+	--p: 0;
+	--pos: static;
+	--r: initial;
+	--t: initial;
+	--tt: uppercase;
+	--w: initial;
+	
+	position: relative;
+}
+
+[data-after-text]:not([data-after-text=""])::after {
+	content: attr(data-after-text);
+}
+[data-before-text]:not([data-before-text=""])::before {
+	content: attr(data-before-text);
+}
+
+[data-after-text]:not([data-after-text=""])::after,
+[data-before-text]:not([data-before-text=""])::before {
+	align-items: center;
+	background: var(--bgc);
+	border-radius: var(--bdrs);
+	bottom: var(--b);
+	box-shadow: var(--bxsh);
+	box-sizing: border-box;
+	color: var(--c);
+	display: var(--d);
+	font-size: var(--fz);
+	font-weight: var(--fw);
+	height: var(--h);
+	justify-content: center;
+	left: var(--l);
+	padding: var(--p);
+	position: var(--pos);
+	right: var(--r);
+	text-decoration: none;
+	text-transform: var(--tt);
+	top: var(--t);
+	width: var(--w);
+}
+
+/* MODIFIERS */
+[data-after-type*="badge"]::after,
+[data-before-type*="badge"]::before {
+	--bdrs: var(--badge-size);
+	--bxsh: 0 0 0 2px rgba(255, 255, 255, 0.5);
+	--h: var(--badge-size);
+	--p: 0;
+	--pos: absolute;
+	--w: var(--badge-size);
+}
+[data-after-type*="circle"],
+[data-before-type*="circle"]{
+	align-items: center;
+	display: flex;
+}
+[data-after-type*="circle"]::after,
+[data-before-type*="circle"]::before {
+	--bdrs: 50%;
+	--fw: 400;
+	--h: var(--circle-size);
+	// --pos: relative;
+	// --t: -0.75em;
+	--tt: initial;
+	--w: var(--circle-size);
+}
+[data-after-type*="circle"]::after,
+[data-after-type*="pill"]::after {
+	margin-inline-start: 1ch;
+}
+[data-before-type*="circle"]::before,
+[data-before-type*="dot"]::before,
+[data-before-type*="pill"]::before {
+	margin-inline-end: 1ch;
+}
+[data-after-type*="dot"]::after,
+[data-before-type*="dot"]::before {
+	--bdrs: 50%;
+	--d: inline-block;
+	--fz: 50%;
+	--h: var(--dot-size);
+	--p: 0;
+	--pos: relative;
+	--t: -1px;
+	--w: var(--dot-size);
+}
+[data-after-type*="dot"]::after,
+[data-before-type*="dot"]::before {
+	content: "" !important;
+}
+[data-after-type*="pill"]::after,
+[data-before-type*="pil"]::before {
+	--bdrs: 1rem;
+	--p: 0.25rem 0.75rem;
+	--pos: relative;
+	--t: -1px;
+}
+
+/* COLORS */
+[data-after-type*="blue"]::after,
+[data-before-type*="blue"]::before {
+	--bgc: #007acc;
+}
+[data-after-type*="darkgray"]::after,
+[data-before-type*="darkgray"]::before {
+	--bgc: #706e6b;
+	--c: #fff;
+}
+[data-after-type*="green"]::after,
+[data-before-type*="green"]::before {
+	--bgc: #04844b;
+}
+[data-after-type*="lightgray"]::after,
+[data-before-type*="lightgray"]::before {
+	--bgc: #ecebea;
+	--c: #080707;
+}
+[data-after-type*="orange"]::after,
+[data-before-type*="orange"]::before {
+	--bgc: #ffb75d;
+	--c: #080707;
+}
+
+[data-after-type*="red"]::after,
+[data-before-type*="red"]::before {
+	--bgc: #c23934;
+}
+
+/* POSITION */
+[data-after-type*="top"]::after,
+[data-before-type*="top"]::before {
+	--b: auto;
+	--pos: absolute;
+	--t: var(--dot-offset);
+}
+[data-after-type*="right"]::after,
+[data-before-type*="right"]::before {
+	--l: auto;
+	--pos: absolute;
+	--r: var(--dot-offset);
+}
+[data-after-type*="bottom"]::after,
+[data-before-type*="bottom"]::before {
+	--b: var(--dot-offset);
+	--pos: absolute;
+	--t: auto;
+}
+[data-after-type*="left"]::after,
+[data-before-type*="left"]::before {
+	--pos: absolute;
+	--r: auto;
+	--l: var(--dot-offset);
+}
+[data-after-type*="badge"][data-after-type*="top"]::after,
+[data-before-type*="badge"][data-before-type*="top"]::before {
+	--m: 0;
+	--t: var(--badge-offset-y);
+}
+[data-after-type*="badge"][data-after-type*="right"]::after,
+[data-before-type*="badge"][data-before-type*="right"]::before {
+	--m: 0;
+	--r: var(--badge-offset-x);
+}
+[data-after-type*="badge"][data-after-type*="bottom"]::after,
+[data-before-type*="badge"][data-before-type*="bottom"]::before {
+	--b: var(--badge-offset-y);
+	--m: 0;
+}
+[data-after-type*="badge"][data-after-type*="left"]::after,
+[data-before-type*="badge"][data-before-type*="left"]::before {
+	--l: var(--badge-offset-x);
+	--m: 0;
+}
+.printable {
+	display: none; /* hide printable divs when not printing */
+}
+
+/* Define styles for print media */
+@media print {
+	.printable {
+		display: block; /* Show printable divs when printing */
+	}
+	.noneprintable {
+		display: none;
+	}
+
+
+
+
+
+}
+
+
+.disabled {
+	pointer-events: none; /* Disables pointer events (e.g., clicks, hover) */
+	background-color: #ccc; /* Change the background color to indicate it's disabled */
+	opacity: 0.7; /* Optionally reduce opacity for a disabled look */
+	cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+}
+.custom_dropdown {
+	position: relative;
+	width: 200px;
+}
+
+.custom_dropdown select {
+	width: 100%;
+	height: 27px;
+}
+
+.custom_dropdown > * {
+	box-sizing: border-box;
+	height: 1.5em;
+}
+
+.custom_dropdown input {
+	position: absolute;
+	width: calc(100% - 20px);
+	height: 27px;
+}
+.notAllowed{
+	background: antiquewhite;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.fitme{
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+}
+
+.pdfshow{
+	display: none;
+}
+
+/* Ensure the table container has a fixed height and overflow */
+.table-responsive {
+	height: 300px; /* Adjust the height as needed */
+	overflow-y: scroll;
+}
+
+/* Set the table header to have a fixed position */
+.table thead {
+	position: sticky;
+	top: 0;
+	z-index: 1; /* Ensure the header stays on top */
+}
+
+.table thead th {
+	background-color: #3F0E6E!important; /* Set your desired background color */
+	z-index: 1; /* Ensure the header stays on top */
+	color: whitesmoke!important;
+}
+
+
+
+.main-sidebar{
+	margin-top: 40px;
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 767px) {
+	/* Adjust margin for mobile */
+	.main-sidebar {
+		margin-top: -53px;
+
+	}
+	a{
+		margin-bottom: 5px!important;
+	}
+	.exam_name_response{
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.mobilehide{
+		display: none;
+	}
+}
+
+
+
+.pricecircle {
+	width: 100px; /* Set the width and height to create a circle */
+	height: 100px;
+	border-radius: 50%; /* Makes the div a circle */
+	background-color: #3498db; /* Background color */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white; /* Text color */
+	font-family: Arial, sans-serif;
+  }
+  
+  .pricelable {
+	text-align: center;
+	text-shadow: 20px;
+
+  }
+
+
+    /* HTML: <div class="loader"></div> */
+.css_loading {
+	width: 120px;
+	height: 22px;
+	border-radius: 40px;
+	color: #291c8e;
+	border: 2px solid;
+	position: relative;
+	overflow: hidden;
+  }
+  .css_loading::before {
+	content: "";
+	position: absolute;
+	margin: 2px;
+	width: 14px;
+	top: 0;
+	bottom: 0;
+	left: -20px;
+	border-radius: inherit;
+	background: currentColor;
+	box-shadow: -10px 0 12px 3px currentColor;
+	clip-path: polygon(0 5%, 100% 0,100% 100%,0 95%,-30px 50%);
+	animation: l14 1s infinite linear;
+  }
+  @keyframes l14 {
+	100% {left: calc(100% + 20px)}
+  }
+
+  .modal-header{
+	background-color: #3F0E6E!important;
+	color: white!important;
+  }
+
+
+  .exportPDF{
+	float: right;
+    margin-bottom: 10px;
+  }
+
+  table{
+	margin-bottom: 5px;
+  }

@@ -1,0 +1,18 @@
+body{
+	font-size: 0.8rem;
+}
+
+/* Define styles for print media */
+@media print {
+	.printable {
+		display: block; /* Show printable divs when printing */
+	}
+	.noneprintable {
+		display: none;
+	}
+
+}
+
+@page{
+	margin-right: 5px;
+}

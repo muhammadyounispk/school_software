@@ -1,0 +1,322 @@
+
+
+
+
+<div style="margin-top: 10px">
+<form id="addresult" method="post" action="GeneralExam/save_result" >
+ <input hidden="" name="exam_no" value="{{exam_no}}">
+    <input  type="text" name="auth_id" value="{{auth_id}}" hidden >
+
+ <input hidden="" name="exam_group_id" value="{{exam_group_id}}">
+ <input hidden="" name="exam_name" value="{{exam_name}}">
+<div id="pdf_content" data-pdfname="{{exam_name}}_{{class_name}}.pdf">
+
+    <table width="98%" id="entry_table" class="pdftable" >
+
+    <tr>
+       <td colspan="100%" class="hide">
+           <table width="100%" border="0" >
+               <tr>
+                   <th><img style="height: 75px;width: auto;object-fit: fill;" src="{{logo}}"> </th>
+                   <th ><h2>{{school.name}}</h2><div>
+                       <b>Phone</b>: {{school.phone}}  <b>Email</b>: {{school.email}}<br>
+                       <b>Address</b>: {{school.address}}<br>
+                       <b>Website</b>: {{school.host}}
+                   </div></th>
+
+                   <th width="50%">
+                       <div class="text-right">
+                           <h5>{{exam_group_name}} Award List</h5>
+                           <table border="1" width="100%">
+                               <tr>
+                                   <th>Exam Name</th>
+                                   <td>{{exam_name}}</td>
+                               </tr><tr>
+                                   <th>Class Name</th>
+                                   <td>{{students[0].class_name}} </td>
+                               </tr>
+                               <tr>
+                                   <th>Subject Name</th>
+                                   <td>{{subject_name}}</td>
+                               </tr>
+
+
+
+                                <tr>
+                                   <th>Total Marks</th>
+                                   <td>{{total_marks}}</td>
+                               </tr>
+                                <tr>
+                                   <th>Dated</th>
+                                   <td>{{exam_date}}</td>
+                               </tr>
+
+
+                           </table>
+
+                       </div>
+                   </th>
+               </tr>
+
+           </table>
+
+       </td>
+    </tr>
+    <tr class="pdfhide" >
+        <td colspan="100%">
+
+
+            {%if allowme['result_sms_whatsapp-can_view'] or  isSupperAdmin %}
+
+            <label class="checkbox-inline bolds">
+                <input type="checkbox" name="save" class="notify_all"   autocomplete="off">Notify Result (SMS / Whatsapp)
+            </label>
+
+            <label class="checkbox-inline bolds">
+                <input checked type="checkbox" name="save" class="select_all"   autocomplete="off">Save Result
+            </label>
+            {%else%}
+            <label class="checkbox-inline bolds hide">
+                <input  checked type="checkbox" name="save" class="select_all"   autocomplete="off">Save Result
+            </label>
+            {% endif %}
+
+            <button  type="button" data-pdfname="Blank_award_list.pdf" id="export_pdf" class=" pdfhide"><i class="fa fa-print"></i> Print Marks sheet</button>
+
+        </td>
+    </tr>
+        <thead>
+    <tr style="background-color: #efefef" >
+        <th width="100" class="pdfhide" >
+
+        </th>
+    <th>Sr</th>
+    <th>Roll #</th>
+    <th>Student Name</th>
+        <th>Father Name</th>
+    <th>Obtain Marks</th>
+    <th class="pdfhide">Total Marks</th>
+    <th class="pdfhide">%</th>
+    <th class="pdfhide">Grade</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for key,student in students %}
+
+    <tr error="true">
+        <td class="pdfhide" >
+
+
+
+            <textarea hidden="hidden" name="student[{{ student.sid }}]" >{{ (student|json_encode) }}</textarea>
+
+
+            {%if allowme['result_sms_whatsapp-can_view'] or isSupperAdmin %}
+
+            <input class="notify" type="checkbox" name="notify[{{ student.sid }}]" >
+            <input class="checkbox" checked type="checkbox" name="save[{{ student.sid }}]">
+             {%else%}
+            <input class="checkbox  hide"  checked type="checkbox" name="save[{{ student.sid }}]">
+            {% endif %}
+
+
+        </td>
+        <td>{{ key+1 }}</td>
+        <td>{{ student.roll_no }}</td>
+        <td>{{ student.firstname }} {{ student.lastname }}</td>
+        <td>{{ student.father_name }} </td>
+        <td><input type="number" style="width: 50px" class="obtain" value="{{student.obtain}}"   tabindex="1" name="result[{{ student.sid }}][obtain]" type="text"> <label class="pdfhide mobilehide"><input type="checkbox" class="absent">Absent</label></td>
+        {% if auth_id == '' %}
+        <td  class="pdfhide"><input style="width: 50px; border: none; background-color: transparent" readonly class="total" id="total" value="{{total_marks}}"  name="result[{{ student.sid }}][total]"  type="text"></td>
+        {% else %}
+        <td   class="pdfhide mobilehide"><input style="width: 50px; border: none; background-color: transparent" readonly class="total" id="total"   name="result[{{ student.sid }}][total]" value="{{student.total}}" type="text"></td>
+        {% endif %}
+        <td class="pdfhide mobilehide"><input style="width: 50px; border: none; background-color: transparent" readonly class="percentage"  value="{{student.percentage}}"  name="result[{{ student.sid }}][percentage]"  type="text"></td>
+        <td class="pdfhide mobilehide">
+            <input style="width: 50px ;border: none; background-color: transparent" readonly  class="grade" value="{{student.grade}}"  name="result[{{ student.sid }}][grade]"  type="text">
+
+
+
+
+            {% if auth_id == '' %}
+            <input  class="form_error" hidden   type="text" value="1">
+            <input hidden   name="result[{{ student.sid }}][exam_date]" value="{{exam_date}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][exam_group_id]" value="{{exam_group_id}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][exam_group_name]" value="{{exam_group_name}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][session_id]" value="{{session_id}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][student_id]" value="{{ student.sid }}"  type="text">
+            <input hidden   name="result[{{ student.sid }}][section_id]" value="{{ section_id }}"  type="text">
+            <input hidden    name="result[{{ student.sid }}][subject_id]" value="{{subject_id}}"  type="text">
+            <input hidden    name="result[{{ student.sid }}][subject_name]" value="{{subject_name}}"  type="text">
+            <input hidden   name="result[{{ student.sid }}][class_id]" value="{{class_id}}"  type="text">
+            <input hidden    name="result[{{ student.sid }}][class_name]" value="{{class_name}}"  type="text">
+
+            {% else %}
+            <input  class="form_error" hidden   type="text" value="0">
+            <input hidden   name="result[{{ student.sid }}][exam_id]" value="{{ student.exam_id  }}"  type="text">
+            <input hidden   name="auth_id"  value="{{ student.auth_id  }}"  type="text">
+            <input hidden    name="result[{{ student.sid }}][subject_name]" value="{{student.subject_name}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][exam_group_name]" value="{{student.exam_group_name}}"  type="text">
+            <input hidden  name="result[{{ student.sid }}][exam_name]" value="{{student.exam_name}}"  type="text">
+
+            {% endif %}
+        </td>
+
+    </tr>
+
+
+
+    {% endfor %}
+
+    <tr class="pdfhide">
+        <td colspan="8">
+            <div style="
+    margin-top: 15px;
+    text-align: center;
+    background: #efefef;
+">
+                <button id="save_result" class="btn btn-primary   " type="button" ><i class="fa fa-save"></i> Save Result </button>
+            </div>
+        </td>
+
+    </tr>
+
+    </tbody>
+
+
+</table>
+</div>
+</form>
+</div>
+
+<!-- Modal -->
+<div id="subjectModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  onclick="document.getElementById('subjectModal').classList.add('hide'); ">&times;</button>
+                <h4 class="modal-title ">Make Datesheet {{exam_name}} For  Class {{class_name}}  </h4>
+            </div>
+            <div class="modal-body">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function checkGrade(percentage) {
+
+        var grades = {{ grades|json_encode(constant('JSON_HEX_TAG'))|raw }};
+
+        for (const grade of grades) {
+
+            if (percentage >=  grade.mark_upto) {
+                return grade.name;
+            }
+        }
+
+        errorMsg("Please Complete Grading for Percentage "+percentage+" %");
+            window.open('../admin/grade',"Grades", "width=960, height=1040, top=0, left=960");
+
+        // If the percentage doesn't match any grade range, you can handle it here.
+        return "-";
+
+    }
+
+
+    $(".absent").on("click", function (e) {
+        if(this.checked) {
+            $(this).closest("tr").find(".obtain").val("ABS");
+            $(this).closest("tr").find(".form_error").val("");
+            $(this).closest("tr").find(".obtain").attr('readonly', true);
+            $(this).closest("tr").attr('style',"background-color:red");
+            $(this).closest("tr").find(".percentage").val('');
+            $(this).closest("tr").find(".grade").val('');
+        }else{
+            $(this).closest("tr").find(".obtain").val("");
+            $(this).closest("tr").find(".form_error").val("1");
+            $(this).closest("tr").find(".obtain").attr('readonly', false);
+            $(this).closest("tr").attr('style',"background-color:white");
+            $(this).closest("tr").find(".percentage").val('');
+            $(this).closest("tr").find(".grade").val('');
+        }
+    });
+
+    $(".obtain").on("change keyup", function (e){
+        var obtain=$(this).val();
+        var total =$(this).closest("tr").find(".total").val();
+        if(total==''){
+            errorMsg('Please Enter Total Marks');
+            $(this).closest("tr").attr('style',"background-color:red");
+            $(this).closest("tr").find(".form_error").val("1");
+            $(this).closest("tr").find(".percentage").val('');
+            $(this).closest("tr").find(".grade").val('');
+            return false;
+        }
+       if(parseInt(obtain) > parseInt(total)){
+           errorMsg('Obtain Marks '+obtain +" not Allowed");
+           $(this).closest("tr").attr('style',"background-color:red");
+           $(this).closest("tr").find(".form_error").val("1");
+           $(this).closest("tr").find(".percentage").val('');
+           $(this).closest("tr").find(".grade").val('');
+           return false;
+       }else{
+           if(parseInt(obtain) >= 0){
+               $(this).closest("tr").attr('style',"background-color:white;color:green");
+               var per=Math.round(parseInt(obtain) /parseInt(total) * 100  );
+              var grade= checkGrade(per);
+               $(this).closest("tr").find(".grade").val(grade);
+               $(this).closest("tr").find(".percentage").val(per+' %');
+               $(this).closest("tr").find(".form_error").val("");
+           }else{
+               $(this).closest("tr").attr('style',"background-color:#ffd3d3");
+               $(this).closest("tr").find(".percentage").val('');
+               $(this).closest("tr").find(".form_error").val("1");
+               $(this).closest("tr").find(".percentage").val('');
+               $(this).closest("tr").find(".grade").val('');
+           }
+
+       }
+    });
+
+
+
+
+
+</script>
+<script  src="{{base_url}}backend/js/jquery.min.js?rand=<?=refresh_code()?>"></script>
+<script>
+
+
+    $('#export_pdf').on('click', function () {
+        Loader(true);
+        var data=$("#pdf_content");
+        $.ajax({
+            url: '{{base_url}}export/pdf',
+            method: 'POST',
+            data : { pdf_content : data.html()},
+            xhrFields: {
+                responseType: 'blob',
+            },
+            success: function (data) {
+                Loader(false);
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = $("#pdf_content").data('pdfname');
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        });
+    });
+
+</script>

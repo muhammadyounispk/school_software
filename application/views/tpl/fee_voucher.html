@@ -1,0 +1,115 @@
+<div style="padding-bottom: 10px;  padding-right: 20px;">
+
+<table width="100%" class="feeVouchertable"  >
+
+{% if show_header == true %}
+   
+
+  <tr>
+    <td>
+      <table width="100%" class="feeVouchertable" >
+        <tr>
+       
+            <td colspan="3">{{title}}</td>
+          </tr>
+          <tr>
+          <td><img src="{{logo}}" style="height: 50px; width: 50px;"></td>
+          <td><span style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">{{school.name}}</span><br>
+          Mobile: {{school.phone}} <br>
+          Email: {{school.email}} <br>
+          Address: {{school.address}} <br>
+          <b>Fee Month: {{fee_month}}</b> 
+         </td>
+          <td><img height="50px" width="50px" src="{{base_url}}/uploads/digis/qrcode.png"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  {% endif %}
+
+  <tr>
+    <td>
+     
+      <table width="100%" class="feeVouchertable"  style="border-collapse: collapse;">
+        
+        <tr>
+          <th>Print @ <b></th>  <td>{{print}}</td>
+          <th>Fee A/C #: </th>  <td><b>{{fee_account}}</span></td>
+        </tr>
+        <tr>
+          <th>Student Name</th>  <td>{{student.firstname}} {{student.lastname}}</td>
+          <th>Father Name</th>  <td>{{student.father_name}}</td>
+        </tr>
+        <tr>
+          <th>Class</th>  <td>{{class}}</td>
+          <th>Section</th>  <td>{{section}}</td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      
+    
+      <table width="100%" class="feeVouchertable"  style="border-collapse: collapse;" border="1">
+        
+        <tr style="background-color: black;color: white;">
+          <th>SR</th>
+          <th>PARTICULER</th>
+          <th>FEE</th>
+          
+        </tr>
+
+        {{td|raw}}
+
+     
+      
+
+      </table>
+      
+    </td>
+  </tr>
+
+</table>
+
+{% if transaction %}
+
+    
+<table align="right" width="100%" class="feeVouchertable"  style="border-bottom: 1px solid black;">
+  <tr>
+    <th style="text-align: right;">Arrears</th> <td>{{transaction.arrears}}/=</td>
+    <th style="text-align: right;">Fee</th> <td>{{student.fee}}/=</td>
+    <th  style="text-align: right;">Total</th> <td>{{transaction.total}}/=</td>
+    <th  style="text-align: right;">Paid</th> <td>{{transaction.amount}}/=</td>
+    <th  style="text-align: right;">Balance</th> <td>{{transaction.balance}}/=</td>
+    </tr>
+    </table>
+
+
+  {% else %}
+  <table align="right" class="feeVouchertable" width="100%"  style="border-bottom: 1px solid black;">
+  <tr>
+    <th  style="text-align: right;">Arrears</th> <td>{{student.arrears}}/=</td>
+    <th style="text-align: right;">Fee</th> <td>{{student.fee}}/=</td>
+    <th  style="text-align: right;">Total</th> <td>{{student.fee+student.arrears}}/=</td>
+    </tr>
+    </table>
+
+ 
+
+{% endif %}
+<span class="feeVouchertable" style="font-size: 0.6rem;"><center>** {{fee_instruction}} **</center></span>
+
+<style type="text/css">
+  .feeVouchertable{
+ 
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  </style>
+
+
+  
+</div>

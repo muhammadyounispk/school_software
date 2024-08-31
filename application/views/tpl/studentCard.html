@@ -1,0 +1,195 @@
+<div class="cardContainer">
+    <div class="padding">
+    <div class="font">
+        <div class="companyname"> 
+           
+            <center>
+
+            <table width="90%" >
+                   <tr>
+                   <td><br><img src="{{logo}}" style="height: 50px; width: 50px;"></td>
+                    <td style="background-color: white;
+                    color: blue;
+                    opacity: 0.7;
+                    /* border: 1px solid; */
+                    border-radius: 11px;"> <b> {{school.name}}<br>MOB: {{school.phone}}</b></td>
+                   </tr>
+                    
+                   
+                    
+                   
+                
+            </table>
+        </center>
+            
+            </div>
+        <div class="top">
+            {% if student.image %}
+            <img src="{{ base_url }}{{ student.image }}" alt="">
+        {% else %}
+            <img src="{{ base_url }}uploads/school_content/logo/profile_image.png" alt="">
+        {% endif %}
+        </div>
+        <div class="">
+            <div class="ename">
+            <p class="p1"><b>{{student.firstname}} {{student.lastname}}</b></p>
+            <p>({{class}}-{{section}})</p>
+            </div>
+            <div class="edetails">
+                <table width="100%">
+                    <tr>
+                        <td>Father Name</td>
+                        <td>{{student.father_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fee A/C </td>
+                        <td>{{fee_account}}</td>
+                    </tr>
+
+                </table>
+              
+                <div class="Address"><b>Address : </b>{{student.current_address}} </div>
+                
+            </div>
+
+            <div class="signature">
+                <img src="{{stamp}}"" alt="">
+            </div>
+
+            <div class="barcode">
+                <img src=https://api.qrserver.com/v1/create-qr-code/?data={{qr_code}}&amp;size=80x80" alt="">
+            </div>
+            <div class="qr">
+                <img src="https://barcodeapi.org/api/auto/{{student.id}}" alt="">
+            </div>
+
+      
+        </div>
+    </div>
+</div>
+   
+</div>
+
+
+<style>
+    *
+        {
+            margin:00px;
+            padding: 00px;
+            
+        }
+        .cardContainer
+        {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            flex-direction: row;
+            margin-left: 15px;
+
+            
+
+        }
+        .font
+        {
+            
+            height: 375px;
+            width:225px;
+            position: relative;
+            border-radius:10px;
+            background-image:url('{{base_url}}/uploads/digis/ecardbgfinal.png');
+            background-size: 225px 375px;
+            background-repeat: no-repeat;
+        }
+        
+        .companyname{
+            color:White;
+            
+        }
+
+        .tab {padding-right:30px;}
+
+        .top img
+        {
+            height: 90px;
+            width:90px;
+            background-color:#e6ebe0;
+            border-radius:57px;
+            position: absolute;
+            top: 60px;
+            left: 102px;
+            object-fit: content;
+            border:3px solid rgba(255 , 255 , 255 , .2);
+            
+        }
+        .ename{
+            position: absolute;
+            top: 160px;
+            left: 90px;
+            color:white;
+            font-size:16px;
+        }
+        .edetails
+        {
+            position: absolute;
+            top: 212px;
+            text-transform:capitalize;
+            font-size: 11px;
+            text-emphasis: spacing;
+            margin-left: 5px;
+        }
+        .signature{
+            position: absolute;
+            top: 75%;
+            height: 80px;
+            width: 160px;
+        }
+        .signature img{
+
+            height: 40px;
+            width: 100px;
+            margin: 15px 00px 00px 5px;
+            border-radius: 7px;
+          
+        }
+
+
+        .barcode img
+        {
+            height: 65px;
+            width: 65px;
+            text-align: center;
+            margin:5px;
+            
+        }
+        .barcode
+        {
+            text-align: center;
+            position: absolute;
+            top:62.5%;
+            left: 135px;
+        }
+        
+
+        .qr img
+        {
+            position: absolute;
+            top: 80%;
+            left: 32%;
+            height: 50px;
+            width:120px;
+            margin:20px;
+            background-color:white;
+            
+        }
+        .edetails .Address
+        {
+           
+            width: 60%;
+            text-align: justify;
+        }
+     
+</style>
