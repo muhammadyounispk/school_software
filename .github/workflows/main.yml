@@ -1,18 +1,22 @@
-on: [push]
-
+on: push
+name: 🚀 Code on dev.isdigitalschools.com
 jobs:
-    deploy_job:
+  web-deploy:
+    name: 🎉 Deploy the 
     runs-on: ubuntu-latest
-    name: deploy
     steps:
-        - name: Checkout
-        uses: actions/checkout@v2
-        - name: deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-            username: 'isdigita'
-            server: '64.31.43.34'
-            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-            local_path: './static/*'
-            remote_path: '/var/www/app'
-            sftpArgs: '-o ConnectTimeout=5'
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        protocol: ftp
+        port: 21
+        exclude: |
+          **/.git*
+
+       
